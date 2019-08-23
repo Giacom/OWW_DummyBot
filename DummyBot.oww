@@ -1,0 +1,137 @@
+rule("Init")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Set Global Variable(R, Vector(-16.620, 7.023, -79.142));
+		Create Dummy Bot(Hero(Doomfist), Team 2, 1, Global Variable(R), Vector(-1.000, 0, 0));
+	}
+}
+
+rule("Player Init")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		Slot 0;
+	}
+
+	conditions
+	{
+		Has Spawned(Event Player) == True;
+	}
+
+	actions
+	{
+		Teleport(Event Player, Vector(-31.478, 7.023, -78.986));
+		Set Facing(Event Player, Vector(0, 0, 0), To World);
+		Create HUD Text(All Players(All Teams), Null, Facing Direction Of(Event Player), Null, Left, 0, White, White, White,
+			Visible To and String, Default Visibility);
+	}
+}
+
+rule("Q = Start - On Floor Slam")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Ultimate) == True;
+	}
+
+	actions
+	{
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(0.050, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Ability 2);
+		Wait(0.800, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(0.050, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Ability 1);
+		Wait(0.500, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(0.400, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(3, Ignore Condition);
+		Teleport(Players In Slot(1, Team 2), Global Variable(R));
+		Set Facing(Players In Slot(1, Team 2), Vector(-1.000, 0, 0), To World);
+		Heal(Players In Slot(1, Team 2), Null, 9999);
+	}
+}
+
+rule("F = Start - High Slam")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Interact) == True;
+	}
+
+	actions
+	{
+		Teleport(Players In Slot(1, Team 2), Add(Global Variable(R), Vector(0, 5, 0)));
+		Wait(0.250, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(0.050, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Ability 2);
+		Wait(0.800, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(0.050, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Ability 1);
+		Wait(0.500, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(0.400, Ignore Condition);
+		Press Button(Players In Slot(1, Team 2), Primary Fire);
+		Wait(3, Ignore Condition);
+		Teleport(Players In Slot(1, Team 2), Global Variable(R));
+		Set Facing(Players In Slot(1, Team 2), Vector(-1.000, 0, 0), To World);
+		Heal(Players In Slot(1, Team 2), Null, 9999);
+		Heal(Event Player, Null, 9999);
+	}
+}
+
+rule("Aimbot Bot")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	actions
+	{
+		Start Facing(Event Player, Direction Towards(Event Player, Players In Slot(0, Team 1)), 500, To World, Direction and Turn Rate);
+	}
+}
+
+rule("Respawn")
+{
+	event
+	{
+		Player Died;
+		All;
+		All;
+	}
+
+	actions
+	{
+		Resurrect(Event Player);
+	}
+}
