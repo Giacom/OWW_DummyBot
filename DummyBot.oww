@@ -66,6 +66,7 @@ rule("Q = Start - On Floor Slam")
 		Teleport(Players In Slot(1, Team 2), Global Variable(R));
 		Set Facing(Players In Slot(1, Team 2), Vector(-1.000, 0, 0), To World);
 		Heal(Players In Slot(1, Team 2), Null, 9999);
+		Heal(Event Player, Null, 9999);
 	}
 }
 
